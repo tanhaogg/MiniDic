@@ -67,6 +67,11 @@ static NSString *allLanguage[]={
 		return;
 	}
 	
+	NSInteger fromIndex=[fromPopUpButton indexOfSelectedItem];
+	NSInteger toIndex=[toPopUpButton indexOfSelectedItem];
+	fromLanguage=allLanguage[fromIndex];
+	toLanguage=allLanguage[toIndex];
+	
 	NSString *urlstring = [NSString stringWithFormat:@"http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&langpair=%@|%@&q=%@",
 						   fromLanguage,toLanguage,string];
     NSString * encodedString = (NSString *)CFURLCreateStringByAddingPercentEscapes( NULL, (CFStringRef)urlstring, NULL, (CFStringRef)@"|",  kCFStringEncodingUTF8 );
