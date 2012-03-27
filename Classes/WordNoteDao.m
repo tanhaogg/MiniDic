@@ -119,7 +119,7 @@ static WordNoteDao *wordNoteDao=nil;
 }
 
 - (BOOL)insertWordNote:(WordNote *)aWordNote{
-	char *errorMsg;
+	//char *errorMsg;
 	char *update=kInsertObjSql;
 	sqlite3_stmt *stmt;
 	if (sqlite3_prepare(database, update, -1, &stmt, nil)==SQLITE_OK) {
@@ -132,7 +132,7 @@ static WordNoteDao *wordNoteDao=nil;
 		sqlite3_bind_int(stmt, 3, level);
 	}
 	if (sqlite3_step(stmt)!=SQLITE_DONE) {
-		NSAssert(0,@"Error updating table:%s",errorMsg);
+		//NSAssert(0,@"Error updating table:%s",errorMsg);
 		sqlite3_finalize(stmt);
 		return NO;
 	}
@@ -141,13 +141,13 @@ static WordNoteDao *wordNoteDao=nil;
 }
 
 - (BOOL)deleteWordNote:(NSString *)aWord{
-	char *errorMsg;
+	//char *errorMsg;
 	NSString *deleteString=[NSString stringWithFormat:@"%@ '%@';",kDeleteObjSql,aWord];
 	__strong const char *deleteSql=[deleteString UTF8String];
 	sqlite3_stmt *stmt;
 	if (sqlite3_prepare(database, deleteSql, -1, &stmt, nil)==SQLITE_OK){
 		if (sqlite3_step(stmt)!=SQLITE_DONE){
-			NSAssert(0,@"Error delete table:%s",errorMsg);
+			//NSAssert(0,@"Error delete table:%s",errorMsg);
 			sqlite3_finalize(stmt);
 			return NO;
 		}

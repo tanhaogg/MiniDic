@@ -106,4 +106,79 @@
 	}
 }
 
+
+#pragma mark -
+#pragma mark Service
+
+- (NSString *)getStringWith:(NSPasteboard *)pboard
+                   userData:(NSString *)data // typed as what we handle
+                      error:(NSString **)error
+{
+    NSString *pboardString;
+	NSString *newString;
+	NSArray *types;
+    
+	types = [pboard types];
+	
+	// if there's a problem with the data passed to this method
+	if(![types containsObject:NSStringPboardType] ||
+       !(pboardString = [pboard stringForType:NSStringPboardType]))
+	{
+		*error = NSLocalizedString(@"Error: Pasteboard doesn't contain a string.",
+                                   @"Pasteboard couldn't give a string.");
+		// if there's a problem then it'll be sure to tell us!
+		return NSLocalizedString(@"Error: Pasteboard doesn't contain a string.",
+                                 @"Pasteboard couldn't give a string.");
+	}
+    
+	// here is where our capitalizing code goes
+	newString = [pboardString capitalizedString]; // it's that easy!
+    
+	// the next block checks to see if there was an error while capitalizing
+	if(!newString)
+	{
+		*error = NSLocalizedString(@"Error: Couldn't capitalize string $@.",
+                                   @"Couldn't perform service operation.");
+		// again, it lets us know of any trouble
+		return NSLocalizedString(@"Error: Couldn't capitalize string $@.",
+                                 @"Couldn't perform service operation.");
+	}
+    
+	// the next bit tells the system what it's returning
+	types = [NSArray arrayWithObject:NSStringPboardType];
+    
+	[pboard declareTypes:types
+	               owner:nil];
+	
+	// and then this sets the string to our capitalized version
+	[pboard setString:newString
+	          forType:NSStringPboardType];
+    
+	return newString;
+}
+
+- (void)srvSearch:(NSPasteboard *)pboard
+        userData:(NSString *)data // typed as what we handle
+           error:(NSString **)error
+{
+	NSString *string = [self getStringWith:pboard userData:data error:error];
+    [self changeViewWithIndex:0];
+    [currentViewController quickTranslateWithString:string];
+    [segmentedControl setSelectedSegment:0];
+    [self.view.window makeKeyAndOrderFront:self];
+}
+
+- (void)srvTranslate:(NSPasteboard *)pboard
+            userData:(NSString *)data // typed as what we handle
+               error:(NSString **)error
+{
+	NSString *string = [self getStringWith:pboard userData:data error:error];
+    [self changeViewWithIndex:1];
+    [currentViewController quickTranslateWithString:string];
+    [segmentedControl setSelectedSegment:1];
+    [self.view.window makeKeyAndOrderFront:self];
+}
+
+
+
 @end

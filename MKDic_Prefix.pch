@@ -4,5 +4,5 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
-    #import "Config.h"
+    #import "config.h"
 #endif

@@ -11,10 +11,12 @@
 
 @protocol CustomViewControllerProtocol<NSObject>
 @required
-- (void)setFirstResponder;               //设置第一响应
-- (void)changeFont:(NSFont *)aFont;      //字体改变
+- (void)setFirstResponder;
+- (void)changeFont:(NSFont *)aFont;
 
-- (void)undoAction;   //undo
-- (void)redoAction;   //redo
+- (void)undoAction;
+- (void)redoAction;
+
+- (void)quickTranslateWithString:(NSString *)str;
 
 @end

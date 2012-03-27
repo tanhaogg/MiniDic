@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WordNote.h"
-#import "/usr/include/sqlite3.h"
+//#import "/usr/include/sqlite3.h"
+#import "sqlite3.h"
 
 #define kFileName      @"data.sqlite3"
 

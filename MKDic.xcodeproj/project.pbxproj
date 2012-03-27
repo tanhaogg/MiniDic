@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04EAAA6F1497B74F00EEF4E6 /* MKServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EAAA6B1497B74F00EEF4E6 /* MKServiceManager.m */; };
+		04EAAA701497B74F00EEF4E6 /* MKWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EAAA6D1497B74F00EEF4E6 /* MKWebService.m */; };
+		04EAAA711497B74F00EEF4E6 /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 04EAAA6E1497B74F00EEF4E6 /* readme.txt */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		400AA21713A9BB4D00DFD74F /* CutomerTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 400AA20E13A9BB4D00DFD74F /* CutomerTextView.m */; };
 		400AA21813A9BB4D00DFD74F /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 400AA21013A9BB4D00DFD74F /* MainViewController.m */; };
@@ -18,7 +21,6 @@
 		400AA22213A9BB5B00DFD74F /* WordsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 400AA21F13A9BB5B00DFD74F /* WordsViewController.xib */; };
 		400AA23113A9BBFB00DFD74F /* sentence_change.png in Resources */ = {isa = PBXBuildFile; fileRef = 400AA22F13A9BBFB00DFD74F /* sentence_change.png */; };
 		400AA23213A9BBFB00DFD74F /* sentence_talk.png in Resources */ = {isa = PBXBuildFile; fileRef = 400AA23013A9BBFB00DFD74F /* sentence_talk.png */; };
-		400AA23713A9BD2800DFD74F /* DownLoadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 400AA23613A9BD2800DFD74F /* DownLoadData.m */; };
 		400AA24B13A9BE6C00DFD74F /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 400AA23A13A9BE6C00DFD74F /* CDataScanner.m */; };
 		400AA24C13A9BE6C00DFD74F /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 400AA23D13A9BE6C00DFD74F /* CDataScanner_Extensions.m */; };
 		400AA24D13A9BE6C00DFD74F /* NSCharacterSet_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 400AA23F13A9BE6C00DFD74F /* NSCharacterSet_Extensions.m */; };
@@ -45,6 +47,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04EAAA6A1497B74F00EEF4E6 /* MKServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKServiceManager.h; sourceTree = "<group>"; };
+		04EAAA6B1497B74F00EEF4E6 /* MKServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKServiceManager.m; sourceTree = "<group>"; };
+		04EAAA6C1497B74F00EEF4E6 /* MKWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebService.h; sourceTree = "<group>"; };
+		04EAAA6D1497B74F00EEF4E6 /* MKWebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebService.m; sourceTree = "<group>"; };
+		04EAAA6E1497B74F00EEF4E6 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -68,8 +75,6 @@
 		400AA21F13A9BB5B00DFD74F /* WordsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsViewController.xib; sourceTree = "<group>"; };
 		400AA22F13A9BBFB00DFD74F /* sentence_change.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sentence_change.png; sourceTree = "<group>"; };
 		400AA23013A9BBFB00DFD74F /* sentence_talk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sentence_talk.png; sourceTree = "<group>"; };
-		400AA23513A9BD2800DFD74F /* DownLoadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownLoadData.h; sourceTree = "<group>"; };
-		400AA23613A9BD2800DFD74F /* DownLoadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownLoadData.m; sourceTree = "<group>"; };
 		400AA23913A9BE6C00DFD74F /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
 		400AA23A13A9BE6C00DFD74F /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		400AA23C13A9BE6C00DFD74F /* CDataScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner_Extensions.h; sourceTree = "<group>"; };
@@ -94,7 +99,7 @@
 		40B5638813AAE5DE00B5A32B /* StudyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudyViewController.h; sourceTree = "<group>"; };
 		40B5638913AAE5DE00B5A32B /* StudyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudyViewController.m; sourceTree = "<group>"; };
 		40B5638B13AAE60800B5A32B /* StudyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyViewController.xib; sourceTree = "<group>"; };
-		40C823D013B335CE008D0451 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		40C823D013B335CE008D0451 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		40CE256613B19400003AF819 /* small_A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_A.png; sourceTree = "<group>"; };
 		40CE256713B19400003AF819 /* big_A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = big_A.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MKDic-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MKDic-Info.plist"; sourceTree = "<group>"; };
@@ -123,6 +128,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04EAAA691497B74F00EEF4E6 /* MKWebService_1.1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				04EAAA6A1497B74F00EEF4E6 /* MKServiceManager.h */,
+				04EAAA6B1497B74F00EEF4E6 /* MKServiceManager.m */,
+				04EAAA6C1497B74F00EEF4E6 /* MKWebService.h */,
+				04EAAA6D1497B74F00EEF4E6 /* MKWebService.m */,
+				04EAAA6E1497B74F00EEF4E6 /* readme.txt */,
+			);
+			path = MKWebService_1.1.0;
+			sourceTree = "<group>";
+		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,12 +214,13 @@
 		400AA20C13A9BB4D00DFD74F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				40C823D013B335CE008D0451 /* Config.h */,
+				04EAAA691497B74F00EEF4E6 /* MKWebService_1.1.0 */,
+				40C823D013B335CE008D0451 /* config.h */,
 				400AA21113A9BB4D00DFD74F /* MKDicAppDelegate.h */,
 				400AA21213A9BB4D00DFD74F /* MKDicAppDelegate.m */,
 				400AA25F13A9C5EA00DFD74F /* GDataXML */,
 				400AA23813A9BE6C00DFD74F /* TouchJSON */,
-				400AA23413A9BD1A00DFD74F /* Manager&Data */,
+				400AA23413A9BD1A00DFD74F /* Manager */,
 				400AA22413A9BB6A00DFD74F /* Views */,
 				400AA22313A9BB6200DFD74F /* ViewControllers */,
 			);
@@ -257,17 +275,15 @@
 			path = images;
 			sourceTree = "<group>";
 		};
-		400AA23413A9BD1A00DFD74F /* Manager&Data */ = {
+		400AA23413A9BD1A00DFD74F /* Manager */ = {
 			isa = PBXGroup;
 			children = (
 				B89CCC3813AF80980009B69D /* DTO */,
 				B89CCC3913AF80A50009B69D /* DAO */,
-				400AA23513A9BD2800DFD74F /* DownLoadData.h */,
-				400AA23613A9BD2800DFD74F /* DownLoadData.m */,
 				400AA2F713A9CE3700DFD74F /* GeneralManager.h */,
 				400AA2F813A9CE3700DFD74F /* GeneralManager.m */,
 			);
-			name = "Manager&Data";
+			name = Manager;
 			sourceTree = "<group>";
 		};
 		400AA23813A9BE6C00DFD74F /* TouchJSON */ = {
@@ -362,11 +378,8 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0410;
-			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MKDic" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -401,6 +414,7 @@
 				40B5638C13AAE60800B5A32B /* StudyViewController.xib in Resources */,
 				40CE256813B19400003AF819 /* small_A.png in Resources */,
 				40CE256913B19400003AF819 /* big_A.png in Resources */,
+				04EAAA711497B74F00EEF4E6 /* readme.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,7 +431,6 @@
 				400AA21913A9BB4D00DFD74F /* MKDicAppDelegate.m in Sources */,
 				400AA21A13A9BB4D00DFD74F /* SentenceViewController.m in Sources */,
 				400AA21B13A9BB4D00DFD74F /* WordsViewController.m in Sources */,
-				400AA23713A9BD2800DFD74F /* DownLoadData.m in Sources */,
 				400AA24B13A9BE6C00DFD74F /* CDataScanner.m in Sources */,
 				400AA24C13A9BE6C00DFD74F /* CDataScanner_Extensions.m in Sources */,
 				400AA24D13A9BE6C00DFD74F /* NSCharacterSet_Extensions.m in Sources */,
@@ -431,6 +444,8 @@
 				40B5638A13AAE5DE00B5A32B /* StudyViewController.m in Sources */,
 				B89CCC3413AF807F0009B69D /* WordNote.m in Sources */,
 				B89CCC3713AF80920009B69D /* WordNoteDao.m in Sources */,
+				04EAAA6F1497B74F00EEF4E6 /* MKServiceManager.m in Sources */,
+				04EAAA701497B74F00EEF4E6 /* MKWebService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +477,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -495,7 +511,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
 				PRODUCT_NAME = "迷你词典";
 				SDKROOT = macosx;
 			};
@@ -509,6 +527,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
 				PRODUCT_NAME = "迷你词典";
 				SDKROOT = macosx;
 			};

@@ -25,14 +25,6 @@ static GeneralManager *generalManager;
 	}
 }
 
-- (id)init{
-	self=[super init];
-	if (self) {
-		speechSynth = [[NSSpeechSynthesizer alloc] initWithVoice:nil];
-	}
-	return self;
-}
-
 - (void)dealloc{
 	[speechSynth release];
 	[super dealloc];
@@ -41,6 +33,7 @@ static GeneralManager *generalManager;
 #pragma mark -
 #pragma mark CustomFunc
 - (void)speakWithText:(NSString *)aText{
+    if(!speechSynth) speechSynth = [[NSSpeechSynthesizer alloc] initWithVoice:nil];
 	[speechSynth startSpeakingString:aText];
 }
 

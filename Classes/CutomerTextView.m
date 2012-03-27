@@ -12,8 +12,6 @@
 @implementation CutomerTextView
 @synthesize delegate;
 
-
-//此方法主要想获取用户敲回车之后的事件(这样写可能也不是很科学)
 - (void)insertNewline:(id)sender{
 	//[super insertNewline:sender];
 	if ([delegate respondsToSelector:@selector(enterClick:)]) {
@@ -26,7 +24,6 @@
 	return returnObj;
 }
 
-//这个地方用了很笨的办法，修改了右键后弹出的功能选项（求高手指引在在右键菜单中如何添加一个新的menuItem）
 - (BOOL)validateUserInterfaceItem:(id < NSValidatedUserInterfaceItem >)anItem{
 	NSMenuItem *menuItem=(NSMenuItem *)anItem;
 	if ([[menuItem title] isEqual:@"Search in Spotlight"]) {

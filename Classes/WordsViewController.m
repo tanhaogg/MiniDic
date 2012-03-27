@@ -11,32 +11,32 @@
 #import "GDataXMLNode.h"
 #import "WordNoteDao.h"
 
-@interface WordsViewController()
-- (void)translateEnd;
-@end
-
-
 @implementation WordsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
 	self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self) {
+	if (self) 
+    {
 		translates=[[NSMutableArray alloc] init];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:kNotificationSearchWorld object:nil];
 	}
 	return self;
 }
 
-- (void)receiveNotification:(NSNotification *)aNotification{
+- (void)receiveNotification:(NSNotification *)aNotification
+{
 	[self performSelector:@selector(rightMenuItemClick:) withObject:[aNotification object]];
 }
 
-- (void)loadView{
+- (void)loadView
+{
 	[super loadView];
 	searchField.delegate=self;
 }
 
-- (void)dealloc{
+- (void)dealloc
+{
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[translates release];
 	[super dealloc];
@@ -45,30 +45,34 @@
 #pragma mark -
 #pragma mark CustomFunc
 
-- (IBAction)translateBegin:(NSButton *)sender{
+- (IBAction)translateBegin:(NSButton *)sender
+{
 	[[GeneralManager shareManager] stopSpeak];
 	
 	NSString *string=[searchField stringValue];
-	if ([string length]==0) {
+	if ([string length]==0) 
+    {
 		return;
 	}
 	
-	NSString *urlstring = [NSString stringWithFormat:@"http://dict.cn/ws.php?q=%@",string];
-    NSString * encodedString = (NSString *)CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)urlstring, NULL, NULL,  kCFStringEncodingUTF8 );
-	
 	//此处利用了异步加载
-	DownLoadData *downLoad=[[DownLoadData alloc] initWithUrlAddress:encodedString];
-	downLoad.delegate=self;
-	[downLoad start];
+    NSString *urlstring = [NSString stringWithFormat:@"http://dict.cn/ws.php?q=%@",string];
+    NSString *encodedString = (NSString *)CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)urlstring, NULL, NULL,  kCFStringEncodingUTF8 );
+    [[MKServiceManager sharedManager] cancelForDelegate:self];
+    [[MKServiceManager sharedManager] downloadWithURL:[NSURL URLWithString:encodedString] delegate:self context:nil];
+    
 	[toTextView setString:@"请等待⋯⋯"];
+    CFRelease(encodedString);
 	return;
 }
 
-- (IBAction)talkClick:(NSButton *)sender{
+- (IBAction)talkClick:(NSButton *)sender
+{
 	[[GeneralManager shareManager] speakWithText:[searchField stringValue]];
 }
 
-- (IBAction)addNewWord:(NSButton *)sender{
+- (IBAction)addNewWord:(NSButton *)sender
+{
 	WordNote *wordNote=[[WordNote alloc] init];
 	static int mm=100;
 	wordNote.row=mm++;
@@ -80,9 +84,10 @@
 	[wordNote release];
 }
 
-//翻译结束，让结果保存到回溯的栈中
-- (void)translateEnd{
-	while ([translates count]>displayIndex+1) {
+- (void)translateEnd
+{
+	while ([translates count]>displayIndex+1) 
+    {
 		[translates removeLastObject];
 	}
 	
@@ -95,8 +100,10 @@
 	displayIndex=[translates count]-1;
 }
 
-- (void)undoAction{
-	if (displayIndex>0) {
+- (void)undoAction
+{
+	if (displayIndex>0) 
+    {
 		--displayIndex;
 		NSArray *currentTrans=[translates objectAtIndex:displayIndex];
 		[searchField setStringValue:(NSString *)[currentTrans objectAtIndex:0]];
@@ -104,8 +111,10 @@
 	}
 }
 
-- (void)redoAction{
-	if ([translates count]>displayIndex+1) {
+- (void)redoAction
+{
+	if ([translates count]>displayIndex+1) 
+    {
 		++displayIndex;
 		NSArray *currentTrans=[translates objectAtIndex:displayIndex];
 		[searchField setStringValue:(NSString *)[currentTrans objectAtIndex:0]];
@@ -113,12 +122,9 @@
 	}
 }
 
-#pragma mark -
-#pragma mark DownLoadDataDelegate
 
-- (void)downLoadBegin:(DownLoadData *)downLoadData{
-	[toTextView setString:@"翻译中⋯⋯"];
-}
+#pragma mark -
+#pragma mark MKServiceManagerDelegate
 
 - (NSString *)readXmlInfo:(NSString *)aString{
 	NSMutableString *displayString=[[[NSMutableString alloc] init] autorelease];
@@ -160,13 +166,16 @@
 	[displayString replaceOccurrencesOfString:@"<em>" withString:@"" options:0 range:NSMakeRange(0, [displayString length])];
 	[displayString replaceOccurrencesOfString:@"</em>" withString:@"" options:0 range:NSMakeRange(0, [displayString length])];
 	
+    [document release];
 	return displayString;
 }
 
-- (void)downLoadFinish:(DownLoadData *)downLoadData didReceiveData:(NSData *)data{
-	NSStringEncoding encoding=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+- (void)serviceFinish:(MKServiceManager *)webService didReceiveData:(NSData *)data context:(id)context
+{
+    NSStringEncoding encoding=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
 	NSString *receiveString = [[NSString alloc] initWithData:data encoding:encoding];
-	if (receiveString==nil) {
+	if (receiveString==nil) 
+    {
 		[toTextView setString:@"No Define !"];
 		return;
 	}	
@@ -174,19 +183,25 @@
 	NSString *displayString=[self readXmlInfo:receiveString];
 	[receiveString release];
 	[toTextView setString:displayString];
-	[downLoadData release];
+    
+    if ([displayString length] == 0)
+    {
+        [toTextView setString:receiveString];
+    }
 	
 	[self translateEnd];
 }
-- (void)downLoadFail:(DownLoadData *)downLoadData didFailWithError:(NSError *)error{
-	[toTextView setString:[error description]];
-	[downLoadData release];
+
+- (void)servicFail:(MKServiceManager *)webService didFailWithError:(NSError *)error context:(id)context
+{
+    [toTextView setString:[error description]];
 }
 
 #pragma mark -
 #pragma mark NSControlTextEditingDelegate
 
-- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor{
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
+{
 	[self translateBegin:nil];
 	return YES;
 }
@@ -194,18 +209,27 @@
 #pragma mark -
 #pragma mark CustomViewControllerProtocol
 
-- (void)setFirstResponder{
+- (void)quickTranslateWithString:(NSString *)str
+{
+    [searchField setStringValue:str];
+    [self translateBegin:nil];
+}
+
+- (void)setFirstResponder
+{
 	[searchField becomeFirstResponder];
 }
 
-- (void)changeFont:(NSFont *)aFont{
+- (void)changeFont:(NSFont *)aFont
+{
 	[toTextView setFont:aFont];
 }
 
 #pragma mark -
 #pragma mark CustomerTextViewDelegate
 
-- (void)rightMenuItemClick:(NSString *)aText{
+- (void)rightMenuItemClick:(NSString *)aText
+{
 	[searchField setStringValue:aText];
 	[self translateBegin:nil];
 }

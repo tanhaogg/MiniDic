@@ -9,15 +9,17 @@
 #import "MKDicAppDelegate.h"
 #import "MainViewController.h"
 #import "GeneralManager.h"
-#import "WordNoteDao.h"
 
 @implementation MKDicAppDelegate
-
 @synthesize window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {	
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification 
+{	
+    
 	mainViewController=[[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
 	[self.window.contentView addSubview:mainViewController.view];
+    
+    [NSApp setServicesProvider:mainViewController];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag{	
@@ -30,7 +32,6 @@
 - (void)dealloc{
 	[mainViewController release];
 	[GeneralManager end];
-	[WordNoteDao end];
 	[super dealloc];
 }
 

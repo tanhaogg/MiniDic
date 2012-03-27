@@ -13,11 +13,12 @@
 	IBOutlet NSSegmentedControl *segmentedControl;
 	IBOutlet NSSegmentedControl *undoSegmentControl;
 	
-	NSArray *viewControllerArray;                                            //存储所有的viewController
-	NSViewController<CustomViewControllerProtocol> *currentViewController;   //当前活跃的viewController
+	NSArray *viewControllerArray;
+	NSViewController<CustomViewControllerProtocol> *currentViewController;
 }
 
-- (IBAction)segmentClick:(NSSegmentedControl *)sender;      //功能选择
-- (IBAction)fontChangeClick:(NSSegmentedControl *)sender;   //字体修改
-- (IBAction)undoClick:(NSSegmentedControl *)sender;         //undo或者redo操作
+- (IBAction)segmentClick:(NSSegmentedControl *)sender;
+- (IBAction)fontChangeClick:(NSSegmentedControl *)sender;
+
+- (IBAction)undoClick:(NSSegmentedControl *)sender;
 @end

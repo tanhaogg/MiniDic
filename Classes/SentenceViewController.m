@@ -7,27 +7,33 @@
 //
 
 #import "SentenceViewController.h"
-#import "CJSONDeserializer.h"
 #import "GeneralManager.h"
+#import "GDataXMLNode.h"
+
 
 @interface SentenceViewController()
 - (void)translateEnd;
 @end
 
 static NSString *allLanguage[]={
-	@"zh",@"en",@"ja"
+	@"zh-CHS",@"en",@"ja"
 };
+static NSString *bingKey = @"408DC1DA22200F983E20EAC99A1D283A5EC5AB79";
+
 @implementation SentenceViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
 	self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self) {
+	if (self) 
+    {
 		translates=[[NSMutableArray alloc] init];
 	}
 	return self;
 }
 
-- (void)loadView{
+- (void)loadView
+{
 	[super loadView];
 	
 	NSInteger fromIndex=1;
@@ -49,7 +55,8 @@ static NSString *allLanguage[]={
 #pragma mark -
 #pragma mark CustomFunc
 
-- (IBAction)buttonChange:(NSPopUpButton *)sender{
+- (IBAction)buttonChange:(NSPopUpButton *)sender
+{
 	NSInteger index=[sender indexOfSelectedItem];
 	if (sender==fromPopUpButton) {
 		fromLanguage=allLanguage[index];
@@ -59,32 +66,27 @@ static NSString *allLanguage[]={
 	
 }
 
-- (IBAction)translateBegin:(NSButton *)sender{
+- (IBAction)translateBegin:(NSButton *)sender
+{
 	[[GeneralManager shareManager] stopSpeak];
 	
 	NSString *string=[fromTextView string];
-	if ([string length]==0) {
+	if ([string length]==0) 
+    {
 		return;
 	}
-	
-	NSInteger fromIndex=[fromPopUpButton indexOfSelectedItem];
-	NSInteger toIndex=[toPopUpButton indexOfSelectedItem];
-	fromLanguage=allLanguage[fromIndex];
-	toLanguage=allLanguage[toIndex];
-	
-	NSString *urlstring = [NSString stringWithFormat:@"http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&langpair=%@|%@&q=%@",
-						   fromLanguage,toLanguage,string];
-    NSString * encodedString = (NSString *)CFURLCreateStringByAddingPercentEscapes( NULL, (CFStringRef)urlstring, NULL, (CFStringRef)@"|",  kCFStringEncodingUTF8 );
-	//NSLog(@"%@",encodedString);
-	//此处利用了异步加载
-	DownLoadData *downLoad=[[DownLoadData alloc] initWithUrlAddress:encodedString];
-	downLoad.delegate=self;
-	[downLoad start];
+    
+    NSString *urlStr = [NSString stringWithFormat:@"http://api.microsofttranslator.com/V2/http.svc/translate?appId=%@&text=%@&from=%@&to=%@",bingKey,string,fromLanguage,toLanguage];
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [[MKServiceManager sharedManager] cancelForDelegate:self];
+    [[MKServiceManager sharedManager] downloadWithURL:[NSURL URLWithString:urlStr] delegate:self context:nil];
+    
 	[toTextView setString:@"请等待⋯⋯"];
 	return;
 }
 
-- (IBAction)changeClick:(NSButton *)sender{
+- (IBAction)changeClick:(NSButton *)sender
+{
 	NSInteger fromIndex=[fromPopUpButton indexOfSelectedItem];
 	NSInteger toIndex=[toPopUpButton indexOfSelectedItem];
 	
@@ -95,7 +97,8 @@ static NSString *allLanguage[]={
 	[toPopUpButton selectItemAtIndex:fromIndex];
 }
 
-- (IBAction)talkClick:(NSButton *)sender{
+- (IBAction)talkClick:(NSButton *)sender
+{
 	
 	NSInteger fromIndex=[fromPopUpButton indexOfSelectedItem];
 	NSInteger toIndex=[toPopUpButton indexOfSelectedItem];
@@ -108,58 +111,66 @@ static NSString *allLanguage[]={
 }
 
 #pragma mark -
-#pragma mark DownLoadDataDelegate
+#pragma mark MKServiceManagerDelegate
 
-- (void)downLoadBegin:(DownLoadData *)downLoadData{
-	[toTextView setString:@"翻译中⋯⋯"];
-}
-
-- (void)downLoadFinish:(DownLoadData *)downLoadData didReceiveData:(NSData *)data{	
-	NSString *stingline = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];	
-	NSData *jsonData = [stingline dataUsingEncoding:NSUTF32BigEndianStringEncoding];
-	
-	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:nil];
-	NSDictionary *arrayline = [dictionary valueForKey:@"responseData"];
-	
-	NSString *translatedText=[arrayline valueForKey:@"translatedText"];
-	[toTextView setString:translatedText];
-	
-	[downLoadData release];
+- (void)serviceFinish:(MKServiceManager *)webService didReceiveData:(NSData *)data context:(id)context
+{
+    NSError *error;
+	GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:data options:0 error:&error];
+	GDataXMLElement *rootNode = [document rootElement];
+    NSString *stingline = [rootNode stringValue];
+    if (stingline.length == 0)
+    {
+        stingline = @"没有找到结果!";
+    }
+    
+	[toTextView setString:stingline];
+    [document release];
 	[self translateEnd];
 }
 
-- (void)downLoadFail:(DownLoadData *)downLoadData didFailWithError:(NSError *)error{	
-	[toTextView setString:@"加载超时，请检查是否连接网络⋯⋯"];
-	
-	[downLoadData release];
+- (void)servicFail:(MKServiceManager *)webService didFailWithError:(NSError *)error context:(id)context
+{
+    [toTextView setString:@"加载超时，请检查是否连接网络⋯⋯"];
 }
 
 #pragma mark -
 #pragma mark CustomTextViewDelegate
 
-- (void)enterClick:(id)sender{
+- (void)enterClick:(id)sender
+{
 	[self translateBegin:nil];
 }
 
-- (void)rightMenuItemClick:(NSString *)aText{
+- (void)rightMenuItemClick:(NSString *)aText
+{
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSearchWorld object:aText userInfo:nil];
 }
 
 #pragma mark -
 #pragma mark CustomViewControllerProtocol
 
-- (void)setFirstResponder{
+- (void)quickTranslateWithString:(NSString *)str
+{
+    [fromTextView setString:str];
+    [self translateBegin:nil];
+}
+
+- (void)setFirstResponder
+{
 	[[fromTextView superview] becomeFirstResponder];
 }
 
-- (void)changeFont:(NSFont *)aFont{
+- (void)changeFont:(NSFont *)aFont
+{
 	[fromTextView setFont:aFont];
 	[toTextView setFont:aFont];
 }
 
-//翻译结束，让结果保存到回溯的栈中
-- (void)translateEnd{
-	while ([translates count]>displayIndex+1) {
+- (void)translateEnd
+{
+	while ([translates count]>displayIndex+1) 
+    {
 		[translates removeLastObject];
 	}
 	
@@ -172,8 +183,10 @@ static NSString *allLanguage[]={
 	displayIndex=[translates count]-1;
 }
 
-- (void)undoAction{
-	if (displayIndex>0) {
+- (void)undoAction
+{
+	if (displayIndex>0) 
+    {
 		--displayIndex;
 		NSArray *currentTrans=[translates objectAtIndex:displayIndex];
 		[fromTextView setString:(NSString *)[currentTrans objectAtIndex:0]];
@@ -181,8 +194,10 @@ static NSString *allLanguage[]={
 	}
 }
 
-- (void)redoAction{
-	if ([translates count]>displayIndex+1) {
+- (void)redoAction
+{
+	if ([translates count]>displayIndex+1) 
+    {
 		++displayIndex;
 		NSArray *currentTrans=[translates objectAtIndex:displayIndex];
 		[fromTextView setString:(NSString *)[currentTrans objectAtIndex:0]];

@@ -8,11 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CustomViewControllerProtocol.h"
-#import "DownLoadData.h"
+#import "MKServiceManager.h"
 #import "CutomerTextView.h"
 
 @interface WordsViewController : NSViewController<CustomViewControllerProtocol,
-DownLoadDataDelegate,NSTextFieldDelegate> {
+MKServiceManagerDelegate,NSTextFieldDelegate> {
 	@public
 	IBOutlet NSSearchField *searchField;
 	IBOutlet NSTextView *toTextView;
@@ -25,4 +25,6 @@ DownLoadDataDelegate,NSTextFieldDelegate> {
 - (IBAction)talkClick:(NSButton *)sender;
 - (IBAction)addNewWord:(NSButton *)sender;
 
+- (void)undoAction;
+- (void)redoAction;
 @end

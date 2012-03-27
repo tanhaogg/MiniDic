@@ -9,10 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "CustomViewControllerProtocol.h"
 #import "CutomerTextView.h"
-#import "DownLoadData.h"
+#import "MKServiceManager.h"
 
 @interface SentenceViewController : NSViewController<CustomViewControllerProtocol,
-DownLoadDataDelegate,CustomerTextViewDelegate> {
+MKServiceManagerDelegate,CustomerTextViewDelegate> {
+	@public
 	IBOutlet NSPopUpButton *fromPopUpButton;
 	IBOutlet NSPopUpButton *toPopUpButton;
 	

@@ -153,7 +153,7 @@
 #pragma mark CustomViewControllerProtocol
 
 - (void)setFirstResponder{
-	self.objArray=[[[WordNoteDao shareDao] selectAll] retain];
+	self.objArray=[NSMutableArray arrayWithArray:[[WordNoteDao shareDao] selectAll]];
 	[currentTableView reloadData];
 	return;
 }
@@ -163,11 +163,16 @@
 }
 
 - (void)undoAction{
-	NULL;
+	return;
 }
 
 - (void)redoAction{
-	NULL;
+	return;
+}
+
+- (void)quickTranslateWithString:(NSString *)str
+{
+    return;
 }
 
 #pragma mark -
