@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04BA7F9315788115002D217C /* THButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BA7F9215788115002D217C /* THButton.m */; };
 		04EAAA6F1497B74F00EEF4E6 /* MKServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EAAA6B1497B74F00EEF4E6 /* MKServiceManager.m */; };
 		04EAAA701497B74F00EEF4E6 /* MKWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EAAA6D1497B74F00EEF4E6 /* MKWebService.m */; };
 		04EAAA711497B74F00EEF4E6 /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 04EAAA6E1497B74F00EEF4E6 /* readme.txt */; };
@@ -47,6 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04BA7F9115788115002D217C /* THButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THButton.h; sourceTree = "<group>"; };
+		04BA7F9215788115002D217C /* THButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THButton.m; sourceTree = "<group>"; };
 		04EAAA6A1497B74F00EEF4E6 /* MKServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKServiceManager.h; sourceTree = "<group>"; };
 		04EAAA6B1497B74F00EEF4E6 /* MKServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKServiceManager.m; sourceTree = "<group>"; };
 		04EAAA6C1497B74F00EEF4E6 /* MKWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebService.h; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 			children = (
 				04EAAA691497B74F00EEF4E6 /* MKWebService_1.1.0 */,
 				40C823D013B335CE008D0451 /* config.h */,
+				04BA7F9115788115002D217C /* THButton.h */,
+				04BA7F9215788115002D217C /* THButton.m */,
 				400AA21113A9BB4D00DFD74F /* MKDicAppDelegate.h */,
 				400AA21213A9BB4D00DFD74F /* MKDicAppDelegate.m */,
 				400AA25F13A9C5EA00DFD74F /* GDataXML */,
@@ -446,6 +451,7 @@
 				B89CCC3713AF80920009B69D /* WordNoteDao.m in Sources */,
 				04EAAA6F1497B74F00EEF4E6 /* MKServiceManager.m in Sources */,
 				04EAAA701497B74F00EEF4E6 /* MKWebService.m in Sources */,
+				04BA7F9315788115002D217C /* THButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

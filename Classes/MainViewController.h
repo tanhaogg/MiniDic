@@ -21,4 +21,6 @@
 - (IBAction)fontChangeClick:(NSSegmentedControl *)sender;
 
 - (IBAction)undoClick:(NSSegmentedControl *)sender;
+
+- (IBAction)supportClick:(id)sender;
 @end

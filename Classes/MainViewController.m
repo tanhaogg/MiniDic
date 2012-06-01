@@ -106,6 +106,10 @@
 	}
 }
 
+- (IBAction)supportClick:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.tanhao.me"]];
+}
 
 #pragma mark -
 #pragma mark Service

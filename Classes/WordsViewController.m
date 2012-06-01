@@ -56,7 +56,8 @@
 	}
 	
 	//此处利用了异步加载
-    NSString *urlstring = [NSString stringWithFormat:@"http://dict.cn/ws.php?q=%@",string];
+    //NSString *urlstring = [NSString stringWithFormat:@"http://dict.cn/ws.php?q=%@",string];
+    NSString *urlstring = [NSString stringWithFormat:@"http://fanyi.youdao.com/openapi.do?keyfrom=tanhao&key=881024171&type=data&doctype=xml&version=1.1&q=%@",string];
     NSString *encodedString = (NSString *)CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)urlstring, NULL, NULL,  kCFStringEncodingUTF8 );
     [[MKServiceManager sharedManager] cancelForDelegate:self];
     [[MKServiceManager sharedManager] downloadWithURL:[NSURL URLWithString:encodedString] delegate:self context:nil];
@@ -126,11 +127,62 @@
 #pragma mark -
 #pragma mark MKServiceManagerDelegate
 
-- (NSString *)readXmlInfo:(NSString *)aString{
+- (NSString *)readXmlInfo:(NSString *)aString
+{
+    NSMutableString *displayString=[[[NSMutableString alloc] init] autorelease];
+	
+	NSError *error;
+	//NSStringEncoding encoding=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSStringEncoding encoding=NSUTF8StringEncoding;
+	NSData *data=[aString dataUsingEncoding:encoding];
+	GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:data options:0 error:&error];
+	GDataXMLElement *rootNode = [document rootElement];
+    
+    //自动纠错
+	NSArray *sugg=[rootNode nodesForXPath:@"//dict/sugg" error:&error];
+	if ([sugg count]>0) {
+		[displayString appendFormat:@"您要查找的是不是:\n"];
+		for(GDataXMLNode* node in sugg){
+			[displayString appendFormat:@"%@    ",[node stringValue]];
+		}
+	}
+	//读音
+	NSArray *pron = [rootNode nodesForXPath:@"//basic/phonetic" error:&error];
+	if ([pron count]>0) {
+		[displayString appendFormat:@"读音: %@\n\n",[[pron objectAtIndex:0] stringValue]];
+	}
+    //解释
+	NSArray *def = [rootNode nodesForXPath:@"//basic/explains/ex" error:&error];
+	if ([def count]>0) 
+    {
+        [displayString appendFormat:@"释义:\n"];
+		for (int i=0; i<[def count]; i++) 
+        {		
+			[displayString appendFormat:@"%@\n",[[def objectAtIndex:i] stringValue]];
+		}
+	}
+    //例句
+	NSArray *orig = [rootNode nodesForXPath:@"//explain/key" error:&error];
+	NSArray *trans= [rootNode nodesForXPath:@"//explain/value/ex" error:&error];
+	if ([orig count]>0) {
+		[displayString appendFormat:@"\n例句:\n"];
+		for (int i=0; i<[orig count]; i++) 
+        {		
+			[displayString appendFormat:@"%@\n%@\n",[[orig objectAtIndex:i] stringValue],[[trans objectAtIndex:i] stringValue]];
+		}
+	}
+    
+    [document release];
+	return displayString;
+}
+
+
+- (NSString *)readXmlInfoOld:(NSString *)aString{
 	NSMutableString *displayString=[[[NSMutableString alloc] init] autorelease];
 	
 	NSError *error;
-	NSStringEncoding encoding=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+	//NSStringEncoding encoding=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSStringEncoding encoding=NSUTF8StringEncoding;
 	NSData *data=[aString dataUsingEncoding:encoding];
 	GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:data options:0 error:&error];
 	GDataXMLElement *rootNode = [document rootElement];
@@ -172,7 +224,8 @@
 
 - (void)serviceFinish:(MKServiceManager *)webService didReceiveData:(NSData *)data context:(id)context
 {
-    NSStringEncoding encoding=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    //NSStringEncoding encoding=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSStringEncoding encoding=NSUTF8StringEncoding;
 	NSString *receiveString = [[NSString alloc] initWithData:data encoding:encoding];
 	if (receiveString==nil) 
     {
@@ -217,7 +270,10 @@
 
 - (void)setFirstResponder
 {
-	[searchField becomeFirstResponder];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.view.window makeFirstResponder:searchField];
+    });
+	//[searchField becomeFirstResponder];
 }
 
 - (void)changeFont:(NSFont *)aFont
