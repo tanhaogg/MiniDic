@@ -234,14 +234,14 @@
 	}	
 	
 	NSString *displayString=[self readXmlInfo:receiveString];
-	[receiveString release];
 	[toTextView setString:displayString];
     
     if ([displayString length] == 0)
     {
-        [toTextView setString:receiveString];
+        [toTextView setString:@"查无此单词！"];
     }
 	
+    [receiveString release];
 	[self translateEnd];
 }
 
